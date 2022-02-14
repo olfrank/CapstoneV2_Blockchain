@@ -5,14 +5,14 @@ import '../node_modules/@openzeppelin/contracts/utils/Address.sol';
 import '../node_modules/@openzeppelin/contracts/utils/Counters.sol';
 import '../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol';
 import '../node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol';
-import "./Oraclize.sol";
+import "./ProvableAPI.sol";
 
 contract Ownable {
     
     address private _owner;
 
 
-    function getOwner()public returns(adddress){
+    function getOwner()public view returns(address){
         return _owner;
     }
     
@@ -21,7 +21,7 @@ contract Ownable {
     }
     
     modifier onlyOwner(){
-        require(msg.sender == _owner, "you must be the owner of the contract to enter this function");
+        require(msg.sender == _owner, "You must be the owner of the contract to enter this function");
         _;
     }
    
@@ -53,8 +53,9 @@ contract Pausable is Ownable{
     event Paused(address initiator, bool value);
     event UnPaused(address initiator, bool value);
 
-    function setPausable(bool _value) public onlyOwner{
+    function setPauseStatus(bool _value) public onlyOwner{
         require(_value == true || _value == false, "you must input a boolean value");
+        require(_paused != _value, "The contract pause status is the same as input argument");
 
         if(_value){
             _paused = _value;
@@ -104,7 +105,7 @@ contract ERC165 {
      * @dev A contract implementing SupportsInterfaceWithLookup
      * implement ERC165 itself
      */
-    constructor () internal {
+    constructor () {
         _registerInterface(_INTERFACE_ID_ERC165);
     }
 
@@ -264,7 +265,7 @@ contract ERC721 is Pausable, ERC165 {
 
     // @dev Internal function to mint a new token
     // TIP: remember the functions to use for Counters. you can refresh yourself with the link above
-    function _mint(address to, uint256 tokenId) internal {
+    function _mint(address to, uint256 tokenId) internal virtual{
 
         // TODO revert if given tokenId already exists or given address is invalid
         require(_tokenOwner[tokenId] == address(0), "This token already exists");
@@ -280,7 +281,7 @@ contract ERC721 is Pausable, ERC165 {
 
     // @dev Internal function to transfer ownership of a given token ID to another address.
     // TIP: remember the functions to use for Counters. you can refresh yourself with the link above
-    function _transferFrom(address from, address to, uint256 tokenId) internal {
+    function _transferFrom(address from, address to, uint256 tokenId) internal virtual{
 
         // TODO: require from address is the owner of the given token
         require(from == ownerOf(tokenId), "You must be the owner of the token");
@@ -347,7 +348,7 @@ contract ERC721Enumerable is ERC165, ERC721 {
     /**
      * @dev Constructor function
      */
-    constructor () public {
+    constructor () {
         // register the supported interface to conform to ERC721Enumerable via ERC165
         _registerInterface(_INTERFACE_ID_ERC721_ENUMERABLE);
     }
@@ -389,7 +390,7 @@ contract ERC721Enumerable is ERC165, ERC721 {
      * @param to address to receive the ownership of the given token ID
      * @param tokenId uint256 ID of the token to be transferred
      */
-    function _transferFrom(address from, address to, uint256 tokenId) internal {
+    function _transferFrom(address from, address to, uint256 tokenId) internal override{
         super._transferFrom(from, to, tokenId);
 
         _removeTokenFromOwnerEnumeration(from, tokenId);
@@ -403,7 +404,7 @@ contract ERC721Enumerable is ERC165, ERC721 {
      * @param to address the beneficiary that will own the minted token
      * @param tokenId uint256 ID of the token to be minted
      */
-    function _mint(address to, uint256 tokenId) internal {
+    function _mint(address to, uint256 tokenId) internal override{
         super._mint(to, tokenId);
 
         _addTokenToOwnerEnumeration(to, tokenId);
@@ -451,7 +452,7 @@ contract ERC721Enumerable is ERC165, ERC721 {
         // To prevent a gap in from's tokens array, we store the last token in the index of the token to delete, and
         // then delete the last slot (swap and pop).
 
-        uint256 lastTokenIndex = _ownedTokens[from].length.sub(1);
+        uint256 lastTokenIndex = _ownedTokens[from].length -1;
         uint256 tokenIndex = _ownedTokensIndex[tokenId];
 
         // When the token to delete is the last token, the swap operation is unnecessary
@@ -463,7 +464,7 @@ contract ERC721Enumerable is ERC165, ERC721 {
         }
 
         // This also deletes the contents at the last position of the array
-        _ownedTokens[from].length--;
+        _ownedTokens[from].pop();
 
         // Note that _ownedTokensIndex[tokenId] hasn't been cleared: it still points to the old slot (now occupied by
         // lastTokenId, or just over the end of the array if the token was the last one).
@@ -478,7 +479,7 @@ contract ERC721Enumerable is ERC165, ERC721 {
         // To prevent a gap in the tokens array, we store the last token in the index of the token to delete, and
         // then delete the last slot (swap and pop).
 
-        uint256 lastTokenIndex = _allTokens.length.sub(1);
+        uint256 lastTokenIndex = _allTokens.length -1;
         uint256 tokenIndex = _allTokensIndex[tokenId];
 
         // When the token to delete is the last token, the swap operation is unnecessary. However, since this occurs so
@@ -490,12 +491,12 @@ contract ERC721Enumerable is ERC165, ERC721 {
         _allTokensIndex[lastTokenId] = tokenIndex; // Update the moved token's index
 
         // This also deletes the contents at the last position of the array
-        _allTokens.length--;
+        _allTokens.pop();
         _allTokensIndex[tokenId] = 0;
     }
 }
 
-contract ERC721Metadata is ERC721Enumerable, usingOraclize {
+contract ERC721Metadata is ERC721Enumerable, usingProvable {
     
     // TODO: Create private vars for token _name, _symbol, and _baseTokenURI (string)
     string private _name;
@@ -508,13 +509,13 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
     bytes4 private constant _INTERFACE_ID_ERC721_METADATA = 0x5b5e139f;
     /*
      * 0x5b5e139f ===
-     *     bytes4(keccak256('name()')) ^
-     *     bytes4(keccak256('symbol()')) ^
+     *     bytes4(keccak256('getName()')) ^
+     *     bytes4(keccak256('getSymbol()')) ^
      *     bytes4(keccak256('tokenURI(uint256)'))
      */
 
 
-    constructor (string memory name, string memory symbol, string memory baseTokenURI) public {
+    constructor (string memory name, string memory symbol, string memory baseTokenURI) {
         // TODO: set instance var values
         _name = name;
         _symbol = symbol;
@@ -524,13 +525,13 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
     }
 
     // TODO: create external getter functions for name, symbol, and baseTokenURI
-    function name() external view returns(string memory){
+    function getName() external view returns(string memory){
         return _name;
     }
-    function symbol() external view returns(string memory){
+    function getSymbol() external view returns(string memory){
         return _symbol;
     }
-    function baseTokenURI() external view returns(string memory){
+    function getBaseTokenURI() external view returns(string memory){
         return _baseTokenURI;
     }
 
@@ -548,7 +549,7 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
     // require the token exists before setting
    function setTokenURI(uint256 tokenId) internal {
         require(_exists(tokenId), "Token does not exist");
-        string memory URI = Concat.strConcat(_baseTokenURI, Strings.toString(_tokenId));
+        string memory URI = strConcat(_baseTokenURI, uint2str(tokenId));
         _tokenURIs[tokenId] = URI;
     }
 
@@ -557,14 +558,13 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
 contract ERC721Mintable is ERC721Metadata{
 
 
-    constructor(string memory name, string memory symbol){
-        ERC721Metadata(name, symbol, "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/");
-    
-    }
+    constructor(string memory name, string memory symbol, string memory baseTokenURI) 
+    ERC721Metadata(name, symbol, baseTokenURI){ }
 
     function mint(address to, uint256 tokenId) public onlyOwner returns(bool){
         super._mint(to, tokenId);
         setTokenURI(tokenId);
+        return true;
     }
 
 }

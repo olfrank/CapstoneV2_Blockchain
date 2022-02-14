@@ -8,6 +8,9 @@ describe("ERC721Mintable", async()=>{
     let accountOne: SignerWithAddress;
     let accountTwo: SignerWithAddress;
     let ercMintable: Contract;
+    let tokenName: "Test_Token"
+    let tokenSymbol: "TT"
+    let uri: "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/"
 
     beforeEach(async()=>{
 
@@ -15,11 +18,7 @@ describe("ERC721Mintable", async()=>{
         
         [owner, accountOne, accountTwo] = await ethers.getSigners();
 
-        let name: "Test_Token"
-        let symbol: "TT"
-        // let uri: "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/"
-
-        ercMintable = await ErcMintable.deploy(name, symbol, {from: owner});
+        ercMintable = await ErcMintable.deploy(tokenName, tokenSymbol, uri, {from: owner});
     })
 
     describe("Init", ()=>{
@@ -28,11 +27,116 @@ describe("ERC721Mintable", async()=>{
         })
     });
 
+
+
+
     describe("Ownable contract", async()=>{
+
         it("should have made contract deployer the owner", async()=>{
             expect(await ercMintable.getOwner()).to.eq(owner);
+        });
+
+        it("should NOT allow for unauthorised to transfer ownership",async()=>{
+
+            await expect( 
+                ercMintable.connect(accountOne).transferOwnership(accountOne)
+                ).to.be.revertedWith(
+                    "You must be the owner of the contract to enter this function"
+                    )
+        });
+
+        it("should revert when calling onlyOwner functions", async()=>{
+            await expect(
+                ercMintable.connect(accountOne).mint(accountOne, 1)
+                ).to.be.revertedWith(
+                "You must be the owner of the contract to enter this function"
+                    )
+            await expect(
+                ercMintable.connect(accountOne).setPauseStatus(true)
+                ).to.be.revertedWith(
+                "You must be the owner of the contract to enter this function"
+                    )
+        });
+
+        it("should transfer ownership of contract correctly", async()=>{
+            await ercMintable.connect(owner).transferOwnership(accountOne);
+            expect(await ercMintable.getOwner()).to.eq(accountOne);
+        });
+    })
+
+    describe("Pausable", async()=>{
+        it("should allow for contract owner to pause the contract", async()=>{
+
+            await expect(
+                ercMintable.connect(owner).setPauseStatus(true)
+                ).to.emit(
+                    ercMintable, "Paused"
+                    ).withArgs(
+                        owner, 
+                        true
+                        )
+
+            expect(
+                await ercMintable.getPauseStatus()
+                ).to.eq(
+                    true
+                    );
         })
+        it("should NOT allow for non-contract owner to pause the contract", async()=>{
+            await expect(
+                ercMintable.connect(accountOne).setPauseStatus(false)
+            ).to.be.revertedWith(
+                "You must be the owner of the contract to enter this function"
+                )
+        })
+
+        it("should not allow the contract owner to set it to the existing value", async()=>{
+            await expect(
+                ercMintable.connect(owner).setPauseStatus(true)
+            ).to.be.revertedWith(
+                "The contract pause status is the same as input argument"
+                )
+        })
+
         
+    })
+
+
+
+
+    describe("match erc721 spec", async()=>{
+        it('should return correct name', async () =>{ 
+            expect(await ercMintable.getName()).to.eq(tokenName)
+        })
+
+        it('should return correct symbol', async () =>{ 
+            expect(await ercMintable.getSymbol()).to.eq(tokenSymbol)
+        })
+
+        it('should return the correct uri', async()=>{
+            expect(await ercMintable.getBaseTokenURI()).to.eq(uri)
+        })
+
+        it('should return total supply', async () =>{ 
+            await ercMintable.connect(owner).mint(accountOne, 1)
+            expect(await ercMintable.totalSupply()).to.eq(1);
+           
+        })
+
+        it('should get token balance', async () =>{ 
+            expect(await ercMintable.balanceOf(accountOne)).to.eq(1);
+        })
+
+        
+
+        // token uri should be complete i.e: https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/1
+        it('should return token uri', async () =>{ 
+            expect(await ercMintable.tokenURI(1)).to.eq("https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/1")
+        })
+
+        it('should transfer token from one owner to another', async function () { 
+            
+        })
     })
         
     
