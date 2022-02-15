@@ -2,6 +2,7 @@
 
 import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-ethers";
+import "@nomiclabs/hardhat-web3"
 // require('.env').config();
 
 module.exports = {

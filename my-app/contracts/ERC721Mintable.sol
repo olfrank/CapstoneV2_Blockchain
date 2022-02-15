@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.4;
 
-import '../node_modules/@openzeppelin/contracts/utils/Address.sol';
-import '../node_modules/@openzeppelin/contracts/utils/Counters.sol';
-import '../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol';
-import '../node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol';
+import './@openzeppelin/Address.sol';
+import './@openzeppelin/Counters.sol';
+import './@openzeppelin/SafeMath.sol';
+import './@openzeppelin/IERC721Receiver.sol';
 import "./ProvableAPI.sol";
 
 contract Ownable {
@@ -30,9 +30,8 @@ contract Ownable {
     event ownershipTransfered (address newOwner, address oldOwner);
 
     function transferOwnership(address _newOwner)public onlyOwner{
-        address _oldOwner = _owner;
-        _newOwner = _owner;
-        emit ownershipTransfered(_newOwner, _oldOwner);
+        _owner = _newOwner;
+        emit ownershipTransfered(_newOwner, msg.sender);
     }
 }
 
