@@ -15,6 +15,7 @@ library Pairing {
         uint[2] X;
         uint[2] Y;
     }
+
     /// @return the generator of G1
     function P1() pure internal returns (G1Point memory) {
         return G1Point(1, 2);
@@ -157,6 +158,9 @@ contract Verifier {
         Pairing.G2Point b;
         Pairing.G1Point c;
     }
+    event TxVerified(string message);
+    event TxNotVerified(string message);
+
     function verifyingKey() pure internal returns (VerifyingKey memory vk) {
         vk.alpha = Pairing.G1Point(uint256(0x19affc23f1449693e73e15806bb12101cdf9074ad0c1a0795f2c49e96355dfe4), uint256(0x0d7b39b02f89cc03437d837dbb702cc35148ce8e75a1c7d828b0576235ac2a34));
         vk.beta = Pairing.G2Point([uint256(0x124c631ca7e89bf6c4846e1b58039d9364aa7de8c08498147f5db8717db49f58), uint256(0x019afb7970ee5d7d71f81dd6386c74041180ae108d9f5efb492c4ca3131c6ccb)], [uint256(0x15e2fb854f864462da9c64a7f04efcca98b47fb3da7c9ecc5eb571ec4c57eec0), uint256(0x2b8256eebbfeebe547f2f7bbcf98aaf09e69eacb36a517b5b3f5a1243dbef977)]);
@@ -190,7 +194,7 @@ contract Verifier {
             uint256[2][2] memory b, 
             uint256[2] memory c, 
             uint[2] memory input
-        ) public view returns (bool r) {
+        ) public returns (bool r) {
         uint[] memory inputValues = new uint[](2);
         Proof memory proof;
         proof.a = Pairing.G1Point(a[0], a[1]);
@@ -201,8 +205,10 @@ contract Verifier {
             inputValues[i] = input[i];
         }
         if (verify(inputValues, proof) == 0) {
+            emit TxVerified("Transaction verified");
             return true;
         } else {
+            emit TxNotVerified("Transaction could not be verified");
             return false;
         }
     }

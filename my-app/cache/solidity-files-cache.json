@@ -229,8 +229,8 @@
       ]
     },
     "/Users/OllieFrancis/Documents/UDACITYprojects/CapstoneV2/my-app/contracts/SolnSquareVerifier.sol": {
-      "lastModificationDate": 1644922927932,
-      "contentHash": "4bdfd18053cd7f970daf8e1115f4281c",
+      "lastModificationDate": 1644943183481,
+      "contentHash": "605520e26f2e833287e3226083a57186",
       "sourceName": "contracts/SolnSquareVerifier.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -256,10 +256,44 @@
         }
       },
       "imports": [],
-      "versionPragmas": [
-        ">=0.8.4"
-      ],
+      "versionPragmas": [],
       "artifacts": []
+    },
+    "/Users/OllieFrancis/Documents/UDACITYprojects/CapstoneV2/my-app/contracts/Verifier.sol": {
+      "lastModificationDate": 1644944326444,
+      "contentHash": "c76b6a1f3dcbca943c4c5cfd0b66b11b",
+      "sourceName": "contracts/Verifier.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Pairing",
+        "Verifier"
+      ]
     }
   }
 }
