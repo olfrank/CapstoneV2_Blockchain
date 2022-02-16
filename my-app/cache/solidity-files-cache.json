@@ -229,8 +229,8 @@
       ]
     },
     "/Users/OllieFrancis/Documents/UDACITYprojects/CapstoneV2/my-app/contracts/SolnSquareVerifier.sol": {
-      "lastModificationDate": 1644943183481,
-      "contentHash": "605520e26f2e833287e3226083a57186",
+      "lastModificationDate": 1645014680520,
+      "contentHash": "dce86f9eaed47a019ce4ddc920119986",
       "sourceName": "contracts/SolnSquareVerifier.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -255,12 +255,19 @@
           }
         }
       },
-      "imports": [],
-      "versionPragmas": [],
-      "artifacts": []
+      "imports": [
+        "./ERC721Mintable.sol"
+      ],
+      "versionPragmas": [
+        ">=0.8.4"
+      ],
+      "artifacts": [
+        "SolnSquareVerifier",
+        "VerifierI"
+      ]
     },
     "/Users/OllieFrancis/Documents/UDACITYprojects/CapstoneV2/my-app/contracts/Verifier.sol": {
-      "lastModificationDate": 1644944326444,
+      "lastModificationDate": 1645013953339,
       "contentHash": "c76b6a1f3dcbca943c4c5cfd0b66b11b",
       "sourceName": "contracts/Verifier.sol",
       "solcConfig": {

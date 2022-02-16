@@ -6,7 +6,6 @@ import verifierProof from '../zokrates/code/square/proof.json';
 
 describe("Verifier", async()=>{
     let verifier: Contract;
-    let proofAsUnit: any;
 
     before(async()=>{
         let Verifier = await ethers.getContractFactory("Verifier");
@@ -15,7 +14,7 @@ describe("Verifier", async()=>{
 
     describe("Init", ()=>{
         it("should initialise", async()=>{
-            await expect(verifier).to.be.ok;
+            expect(verifier).to.be.ok;
         });
     });
 
@@ -60,7 +59,7 @@ describe("Verifier", async()=>{
                     verifierProof.proof.a,
                     verifierProof.inputs
                 )
-            ).to.eq(false)
+            ).to.eq(false);
         });
 
         it("should return false when incorrect input is provided", async()=>{

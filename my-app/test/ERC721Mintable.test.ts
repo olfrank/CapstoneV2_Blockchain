@@ -24,7 +24,7 @@ describe("ERC721Mintable", async()=>{
 
     describe("Init", ()=>{
         it("should initialise", async()=>{
-            await expect(ercMintable).to.be.ok;
+            expect(ercMintable).to.be.ok;
         });
     });
 

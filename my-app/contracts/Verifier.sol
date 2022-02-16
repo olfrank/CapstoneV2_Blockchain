@@ -158,8 +158,8 @@ contract Verifier {
         Pairing.G2Point b;
         Pairing.G1Point c;
     }
-    event TxVerified(string message);
-    event TxNotVerified(string message);
+    // event TxVerified(string message);
+    // event TxNotVerified(string message);
 
     function verifyingKey() pure internal returns (VerifyingKey memory vk) {
         vk.alpha = Pairing.G1Point(uint256(0x19affc23f1449693e73e15806bb12101cdf9074ad0c1a0795f2c49e96355dfe4), uint256(0x0d7b39b02f89cc03437d837dbb702cc35148ce8e75a1c7d828b0576235ac2a34));
@@ -194,7 +194,7 @@ contract Verifier {
             uint256[2][2] memory b, 
             uint256[2] memory c, 
             uint[2] memory input
-        ) public returns (bool r) {
+        ) public view returns (bool r) {
         uint[] memory inputValues = new uint[](2);
         Proof memory proof;
         proof.a = Pairing.G1Point(a[0], a[1]);
@@ -205,10 +205,10 @@ contract Verifier {
             inputValues[i] = input[i];
         }
         if (verify(inputValues, proof) == 0) {
-            emit TxVerified("Transaction verified");
+            // emit TxVerified("Transaction verified");
             return true;
         } else {
-            emit TxNotVerified("Transaction could not be verified");
+            // emit TxNotVerified("Transaction could not be verified");
             return false;
         }
     }

@@ -1,51 +1,95 @@
-// // SPDX-License-Identifier: MIT
-// pragma solidity >=0.8.4;
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.8.4;
 
-// // TODO define a contract call to the zokrates generated solidity contract <Verifier> or <renamedVerifier>
-// import './ERC721Mintable.sol';
-// import './Verifier.sol';
+import './ERC721Mintable.sol';
 
-
-// // TODO define another contract named SolnSquareVerifier that inherits from your ERC721Mintable class
-// contract SolnSquareVerifier is ERC721Mintable{
+contract SolnSquareVerifier is ERC721Mintable{
+    VerifierI private verifierC;
 
 
+    struct Solution{
+        uint256 solIndex;
+        address solAddress;
+        bool minted;
+    }
+    Solution[] solutionsArray;
+    mapping(bytes32 => Solution) private solutions;
 
 
-// // TODO define a solutions struct that can hold an index & an address
-//     struct Solution{
-//         uint256 index;
-//         address from;
-//     }
+    constructor(address verifierContractAdd, 
+                string memory name, 
+                string memory symbol, 
+                string memory baseURI
+                ) 
+    ERC721Mintable(name, symbol, baseURI)
+    {
+        verifierC = VerifierI(verifierContractAdd);
+    }
+
+    
+    event SolutionAdded(uint256 index, address from);
+    event MintedSolution(uint256 index, address from);
 
 
-//     // TODO define an array of the above struct
-//     Solution[] solution;
+    function addSolution(uint256[2] memory a, 
+                         uint256[2][2] memory b, 
+                         uint256[2] memory c, 
+                         uint[2] memory input) external {
+
+        bytes32 solHash = keccak256(
+            abi.encodePacked(input[0], input[1])
+        );
+        require(solutions[solHash].solAddress == address(0),"This solution already exists");
+
+        bool verified = verifierC.verifyTx(a, b, c, input);
+        require(verified, "Transaction could not be verified with given arguments");
+
+        uint256 _index = solutionsArray.length;
+
+        solutions[solHash].solAddress = msg.sender;
+        solutions[solHash].solIndex = _index;
+        solutions[solHash].minted = false;
+
+        Solution memory sol = Solution(_index, msg.sender, false);
+
+        solutionsArray.push(sol);
+
+        emit SolutionAdded(_index, msg.sender);
+    }
 
 
-//     // TODO define a mapping to store unique solutions submitted
-//     // mapping( => solution) private solutions;
+    function uniqueSolutionChecker(bytes32 _solHash, address sender) internal view returns(bool res){
+        require(solutions[_solHash].solAddress != address(0), "Must be a valid address");
+        require(solutions[_solHash].solAddress == sender, "Only the solution address can initialise a mint");
+        require(solutions[_solHash].minted == false, "Token has already been minted with this solution");
+
+        return true;
+    }
 
 
-//     // TODO Create an event to emit when a solution is added
-//     event SolutionAdded(uint256 index, address from);
+    function mintNewNFT(uint256[2] calldata inputs, address to) public {
+        require(to != address(0), "Must be a valid address");
+        bytes32 solHash = keccak256(abi.encodePacked(inputs[0], inputs[1]));
 
+        (bool isUnique) = uniqueSolutionChecker(solHash, msg.sender);
+        require(isUnique, "This solution is not unique");
 
-//     // TODO Create a function to add the solutions to the array and emit the event
-//     function addSolution() external returns(){
+        uint _index = solutions[solHash].solIndex;
 
-//     }
+        super.mint(to, _index);
 
+        solutions[solHash].minted == true;
+        emit MintedSolution(_index, solutions[solHash].solAddress);
+    }
+}
 
-//     // TODO Create a function to mint new NFT only after the solution has been verified
-//     function mint() public returns(){
-//         require(,"")
-//     }
-//     //  - make sure the solution is unique (has not been used before)
-//     //  - make sure you handle metadata as well as tokenSupply
-
-  
-// }
+interface VerifierI{
+    function verifyTx(uint256[2] memory a, 
+                      uint256[2][2] memory b, 
+                      uint256[2] memory c, 
+                      uint[2] memory input
+                      ) external returns(bool r);
+}
 
 
 
