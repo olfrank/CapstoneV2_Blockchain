@@ -12,7 +12,8 @@
 # Deployed Contracts
 
 # Smart Contracts and Testing
-![](./images/tests.png =50x10)
+<!-- ![](./images/tests.png =50x10) -->
+<img src="./images/tests.png =50x10" width="50%">
 
 ### Testing
 - Chai: BDD / TDD assertion library for node.
