@@ -67,7 +67,7 @@ contract SolnSquareVerifier is ERC721Mintable{
     }
 
 
-    function mintNewNFT(uint256[2] calldata inputs, address to) public {
+    function mintNewNFT(uint256[2] calldata inputs, address to) external{
         require(to != address(0), "Must be a valid address");
         bytes32 solHash = keccak256(abi.encodePacked(inputs[0], inputs[1]));
 
@@ -76,7 +76,8 @@ contract SolnSquareVerifier is ERC721Mintable{
 
         uint _index = solutions[solHash].solIndex;
 
-        super.mint(to, _index);
+        super._mint(to, _index);
+        setTokenURI(_index);
 
         solutions[solHash].minted == true;
         emit MintedSolution(_index, solutions[solHash].solAddress);

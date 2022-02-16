@@ -229,8 +229,8 @@
       ]
     },
     "/Users/OllieFrancis/Documents/UDACITYprojects/CapstoneV2/my-app/contracts/SolnSquareVerifier.sol": {
-      "lastModificationDate": 1645014680520,
-      "contentHash": "dce86f9eaed47a019ce4ddc920119986",
+      "lastModificationDate": 1645017836737,
+      "contentHash": "a69b06f91f86051fd3f9ba01d1b22699",
       "sourceName": "contracts/SolnSquareVerifier.sol",
       "solcConfig": {
         "version": "0.8.4",
