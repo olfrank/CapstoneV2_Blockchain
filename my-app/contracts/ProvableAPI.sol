@@ -25,7 +25,7 @@ pragma solidity ^0.8.4; // Incompatible compiler version - please select a compi
 
 // Dummy contract only used to emit to end-user they are using wrong solc
 abstract contract solcChecker {
-/* INCOMPATIBLE SOLC: import the following instead: "github.com/oraclize/ethereum-api/oraclizeAPI_0.4.sol" */ function f(bytes calldata x) virtual external;
+function f(bytes calldata x) virtual external;
 }
 
 interface ProvableI {

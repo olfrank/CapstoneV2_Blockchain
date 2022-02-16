@@ -30,6 +30,12 @@
 <img src="images/tests.png" width="50%">
 <br>
 
+### Smart Contracts 
+- `ERC721Mintable.sol`
+- `ProvableAPI.sol`
+- `SolnSquareVerifier`
+- `Verifier.sol`
+
 ### Testing
 - Test cases have been written in TypeScript.
 - [Chai](https://www.chaijs.com/): BDD / TDD assertion library for node.
