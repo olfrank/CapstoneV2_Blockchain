@@ -2,7 +2,7 @@
 pragma solidity >=0.8.4;
 
 import './ERC721Mintable.sol';
-import "../node_modules/hardhat/console.sol";
+import "./@openzeppelin/console.sol";
 
 contract SolnSquareVerifier is ERC721Mintable{
     VerifierI private verifierC;
@@ -13,7 +13,10 @@ contract SolnSquareVerifier is ERC721Mintable{
         bool minted;
     }
 
-    Solution[] solutionsArray;
+    // Solution[] solutionsArray;
+
+    // - chose to use a counter instead of length of array for gas optimisation
+    uint256 solutionsCounter = 0; 
 
     mapping(bytes32 => Solution) private solutions;
 
@@ -44,21 +47,17 @@ contract SolnSquareVerifier is ERC721Mintable{
         bool verified = verifierC.verifyTx(a, b, c, input);
         require(verified, "Transaction could not be verified with given arguments");
 
-        uint256 _index = solutionsArray.length;
-        Solution memory sol = Solution({
-            solAddress: msg.sender,
-            solIndex: _index,
-            minted: false
-        });
+        Solution memory sol = Solution(solutionsCounter, msg.sender, false);
 
-        solutionsArray.push(sol);
+        solutions[solHash] = sol;
 
-        emit SolutionAdded(_index, msg.sender);
+        // solutionsArray.push(sol);
+        emit SolutionAdded(solutionsCounter, sol.solAddress);
+        solutionsCounter++;
     }
 
 
     function uniqueSolutionChecker(bytes32 _solHash, address _to, address minter) internal view returns(bool res){
-        console.log("To address = %s, minter = %s", _to, minter);
         require(_to != address(0), "param 'to' Must be a valid address");
         require(solutions[_solHash].solAddress == minter, "Only the solution address can initialise a mint");
         require(solutions[_solHash].solAddress != address(0), "param 'minter' must be a valid address");
@@ -68,7 +67,6 @@ contract SolnSquareVerifier is ERC721Mintable{
 
 
     function mintNewNFT(uint256[2] calldata inputs, address to) external whenNotPaused{
-        console.log("To address = %s, msg.sender = %s", to, msg.sender);
         bytes32 solHash = keccak256(abi.encodePacked(inputs[0], inputs[1]));
         (bool isUnique) = uniqueSolutionChecker(solHash, to, msg.sender);
         require(isUnique, "This solution is not unique");

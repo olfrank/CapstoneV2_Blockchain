@@ -229,8 +229,8 @@
       ]
     },
     "/Users/OllieFrancis/Documents/UDACITYprojects/CapstoneV2/my-app/contracts/SolnSquareVerifier.sol": {
-      "lastModificationDate": 1645099921096,
-      "contentHash": "5d6e48e117fa5abaa56f69cc4d9bd933",
+      "lastModificationDate": 1645102333517,
+      "contentHash": "fe7fc447ee4479734e5aaa6b30085ed5",
       "sourceName": "contracts/SolnSquareVerifier.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -256,7 +256,8 @@
         }
       },
       "imports": [
-        "./ERC721Mintable.sol"
+        "./ERC721Mintable.sol",
+        "./@openzeppelin/console.sol"
       ],
       "versionPragmas": [
         ">=0.8.4"
@@ -300,6 +301,41 @@
       "artifacts": [
         "Pairing",
         "Verifier"
+      ]
+    },
+    "/Users/OllieFrancis/Documents/UDACITYprojects/CapstoneV2/my-app/contracts/@openzeppelin/console.sol": {
+      "lastModificationDate": 1645100761506,
+      "contentHash": "cc4777addd464ea56fa35b1c45df0591",
+      "sourceName": "contracts/@openzeppelin/console.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.0"
+      ],
+      "artifacts": [
+        "console"
       ]
     }
   }
