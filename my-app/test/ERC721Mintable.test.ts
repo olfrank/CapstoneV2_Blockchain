@@ -77,8 +77,7 @@ describe("ERC721Mintable", async()=>{
                 ercMintable.setPauseStatus(true)
                 ).to.emit(
                     ercMintable, "Paused"
-                    ).withArgs(
-                        owner.address, 
+                    ).withArgs( 
                         true
                         )
 
@@ -97,7 +96,7 @@ describe("ERC721Mintable", async()=>{
             await expect(
                 ercMintable.setPauseStatus(true)
             ).to.be.revertedWith(
-                "The contract pause status is the same as input argument"
+                "You must initialise a different value"
                 )
         });
 

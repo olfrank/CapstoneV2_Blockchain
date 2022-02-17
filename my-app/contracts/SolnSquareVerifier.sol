@@ -6,13 +6,14 @@ import './ERC721Mintable.sol';
 contract SolnSquareVerifier is ERC721Mintable{
     VerifierI private verifierC;
 
-
     struct Solution{
         uint256 solIndex;
         address solAddress;
         bool minted;
     }
+
     Solution[] solutionsArray;
+
     mapping(bytes32 => Solution) private solutions;
 
 
@@ -22,9 +23,7 @@ contract SolnSquareVerifier is ERC721Mintable{
                 string memory baseURI
                 ) 
     ERC721Mintable(name, symbol, baseURI)
-    {
-        verifierC = VerifierI(verifierContractAdd);
-    }
+    { verifierC = VerifierI(verifierContractAdd); }
 
     
     event SolutionAdded(uint256 index, address from);
@@ -34,7 +33,7 @@ contract SolnSquareVerifier is ERC721Mintable{
     function addSolution(uint256[2] memory a, 
                          uint256[2][2] memory b, 
                          uint256[2] memory c, 
-                         uint[2] memory input) external {
+                         uint[2] memory input) external whenNotPaused{
 
         bytes32 solHash = keccak256(
             abi.encodePacked(input[0], input[1])
@@ -45,12 +44,11 @@ contract SolnSquareVerifier is ERC721Mintable{
         require(verified, "Transaction could not be verified with given arguments");
 
         uint256 _index = solutionsArray.length;
+        Solution memory sol = solutions[solHash];
 
-        solutions[solHash].solAddress = msg.sender;
-        solutions[solHash].solIndex = _index;
-        solutions[solHash].minted = false;
-
-        Solution memory sol = Solution(_index, msg.sender, false);
+        sol.solAddress = msg.sender;
+        sol.solIndex = _index;
+        sol.minted = false;
 
         solutionsArray.push(sol);
 
@@ -58,24 +56,21 @@ contract SolnSquareVerifier is ERC721Mintable{
     }
 
 
-    function uniqueSolutionChecker(bytes32 _solHash, address sender) internal view returns(bool res){
+    function uniqueSolutionChecker(bytes32 _solHash, address _to, address minter) internal view returns(bool res){
+        require(_to != address(0), "Must be a valid address");
         require(solutions[_solHash].solAddress != address(0), "Must be a valid address");
-        require(solutions[_solHash].solAddress == sender, "Only the solution address can initialise a mint");
+        require(solutions[_solHash].solAddress == minter, "Only the solution address can initialise a mint");
         require(solutions[_solHash].minted == false, "Token has already been minted with this solution");
-
         return true;
     }
 
 
-    function mintNewNFT(uint256[2] calldata inputs, address to) external{
-        require(to != address(0), "Must be a valid address");
+    function mintNewNFT(uint256[2] calldata inputs, address to) external whenNotPaused{
         bytes32 solHash = keccak256(abi.encodePacked(inputs[0], inputs[1]));
-
-        (bool isUnique) = uniqueSolutionChecker(solHash, msg.sender);
+        (bool isUnique) = uniqueSolutionChecker(solHash, to, msg.sender);
         require(isUnique, "This solution is not unique");
 
         uint _index = solutions[solHash].solIndex;
-
         super._mint(to, _index);
         setTokenURI(_index);
 
@@ -83,6 +78,10 @@ contract SolnSquareVerifier is ERC721Mintable{
         emit MintedSolution(_index, solutions[solHash].solAddress);
     }
 }
+
+
+
+
 
 interface VerifierI{
     function verifyTx(uint256[2] memory a, 

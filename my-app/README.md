@@ -59,7 +59,7 @@
 
 2. Make sure Docker is running
 
-3. Run the ZoKrates docker image: `docker run -v /Users/OllieFrancis/Documents/UDACITYprojects/CapstoneV2/my-app/zokrates/code:/home/zokrates/code -ti zokrates/zokrates /bin/bash`
+3. Run the ZoKrates docker image: `docker run -v <path to your project folder>:/home/zokrates/code -ti zokrates/zokrates /bin/bash`
 
 4. `cd code/square`
 
@@ -72,5 +72,7 @@
 8. Generate proof `zokrates generate-proof`
 
 9. Export verifier.sol `zokrates export-verifier`
+
+10. Generated Files are: `abi.json out proof.json proving.key verification.key verifier.sol witness`
 
 
