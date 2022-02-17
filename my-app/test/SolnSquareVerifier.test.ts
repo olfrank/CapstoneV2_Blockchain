@@ -64,7 +64,7 @@ describe("SolnSquareVerifier", async()=>{
 
         it("should mint a new NFT and adjust balance of minter", async()=>{
             let balBefore = await squareVerifier.balanceOf(accountOne.address);
-
+            console.log(accountOne.address);
             await expect(squareVerifier.connect(accountOne).mintNewNFT(
                 verifierProof.inputs, 
                 accountOne.address)

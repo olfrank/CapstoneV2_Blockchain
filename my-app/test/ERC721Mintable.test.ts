@@ -82,6 +82,17 @@ describe("ERC721Mintable", async()=>{
                         )
 
             expect(await ercMintable.getPauseStatus()).to.eq(true);
+            
+            
+            await expect(
+                ercMintable.setPauseStatus(false)
+                ).to.emit(
+                    ercMintable, "UnPaused"
+                    ).withArgs( 
+                        false
+                        )
+
+            expect(await ercMintable.getPauseStatus()).to.eq(false);
         });
 
         it("should NOT allow for non-contract owner to pause the contract", async()=>{
@@ -94,7 +105,7 @@ describe("ERC721Mintable", async()=>{
 
         it("should NOT allow the contract owner to set it to the existing value", async()=>{
             await expect(
-                ercMintable.setPauseStatus(true)
+                ercMintable.setPauseStatus(false)
             ).to.be.revertedWith(
                 "You must initialise a different value"
                 )

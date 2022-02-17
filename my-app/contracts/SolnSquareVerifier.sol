@@ -2,6 +2,7 @@
 pragma solidity >=0.8.4;
 
 import './ERC721Mintable.sol';
+import "../node_modules/hardhat/console.sol";
 
 contract SolnSquareVerifier is ERC721Mintable{
     VerifierI private verifierC;
@@ -44,11 +45,11 @@ contract SolnSquareVerifier is ERC721Mintable{
         require(verified, "Transaction could not be verified with given arguments");
 
         uint256 _index = solutionsArray.length;
-        Solution memory sol = solutions[solHash];
-
-        sol.solAddress = msg.sender;
-        sol.solIndex = _index;
-        sol.minted = false;
+        Solution memory sol = Solution({
+            solAddress: msg.sender,
+            solIndex: _index,
+            minted: false
+        });
 
         solutionsArray.push(sol);
 
@@ -57,15 +58,17 @@ contract SolnSquareVerifier is ERC721Mintable{
 
 
     function uniqueSolutionChecker(bytes32 _solHash, address _to, address minter) internal view returns(bool res){
-        require(_to != address(0), "Must be a valid address");
-        require(solutions[_solHash].solAddress != address(0), "Must be a valid address");
+        console.log("To address = %s, minter = %s", _to, minter);
+        require(_to != address(0), "param 'to' Must be a valid address");
         require(solutions[_solHash].solAddress == minter, "Only the solution address can initialise a mint");
+        require(solutions[_solHash].solAddress != address(0), "param 'minter' must be a valid address");
         require(solutions[_solHash].minted == false, "Token has already been minted with this solution");
         return true;
     }
 
 
     function mintNewNFT(uint256[2] calldata inputs, address to) external whenNotPaused{
+        console.log("To address = %s, msg.sender = %s", to, msg.sender);
         bytes32 solHash = keccak256(abi.encodePacked(inputs[0], inputs[1]));
         (bool isUnique) = uniqueSolutionChecker(solHash, to, msg.sender);
         require(isUnique, "This solution is not unique");
