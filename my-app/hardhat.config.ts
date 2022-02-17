@@ -5,6 +5,7 @@ import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-web3"
 import "hardhat-gas-reporter";
+import "@nomiclabs/hardhat-etherscan";
 import { HardhatUserConfig } from 'hardhat/config';
 
 
@@ -21,9 +22,10 @@ const config: HardhatUserConfig = {
     },
   },
 
-  // etherscan:{
-  //   apiKey: `${process.env.ETHERSCAN_API_KEY}`
-  // } 
+  etherscan: {
+    apiKey: `${process.env.ETHERSCAN_API_KEY}`,
+  },
+
 };
                                                             
 export default config;

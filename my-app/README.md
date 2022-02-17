@@ -24,6 +24,12 @@
 <br>
 
 # Deployed Contracts
+#### Contracts deployed to the rinkeby test network and verified on Etherscan
+- Verifier Contract Address: `0x8Db6F39A64266Eb4F3f973dA55771Cc821a64DF3` @ txn `0x075d42e4506199ba272ba979a951db2d5bc8708756de1990f7ceb5e2d8b6752b`
+<img src="images/verifierEtherscan.png" width="50%">
+
+- SolnSquareVerifier Contract Address: `0xce5579E0640eDae92a43DfC33Eb8c6857bdBf1f2` @ txn `0xb1acc8f309e959cc0fb2a9f42a103685fe4444d32b241478a32612017f202593`
+<img src="images/solnSquareEtherscan.png" width="50%">
 
 # Smart Contracts and Testing
 <!-- ![](./images/tests.png =50x10) -->
