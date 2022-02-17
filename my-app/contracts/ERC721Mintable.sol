@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import './@openzeppelin/Address.sol';
-import './@openzeppelin/Counters.sol';
-import './@openzeppelin/SafeMath.sol';
-import './@openzeppelin/IERC721Receiver.sol';
+import '../helpers/@openzeppelin/Address.sol';
+import '../helpers/@openzeppelin/Counters.sol';
+import '../helpers/@openzeppelin/SafeMath.sol';
+import '../helpers/@openzeppelin/IERC721Receiver.sol';
 import "./ProvableAPI.sol";
 
 contract Ownable {

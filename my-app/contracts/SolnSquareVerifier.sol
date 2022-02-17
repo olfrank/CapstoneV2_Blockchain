@@ -2,7 +2,7 @@
 pragma solidity >=0.8.4;
 
 import './ERC721Mintable.sol';
-import "./@openzeppelin/console.sol";
+import "../helpers/@openzeppelin/console.sol";
 
 contract SolnSquareVerifier is ERC721Mintable{
     VerifierI private verifierC;
