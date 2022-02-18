@@ -3,7 +3,7 @@ import {ethers} from 'hardhat';
 
 const main = async()=>{
 
-    const name = "zkProperties";
+    const name = "ZK_Properties";
     const symbol = "ZKP";
     const baseTokenURI = "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/";
 

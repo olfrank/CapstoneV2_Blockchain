@@ -24,7 +24,7 @@
 <br>
 
 # Deployed Contracts
-#### Contracts deployed to the rinkeby test network and verified on Etherscan
+### Contracts deployed to the rinkeby test network and verified on Etherscan
 - Verifier Contract Address: `0x8Db6F39A64266Eb4F3f973dA55771Cc821a64DF3` @ txn `0x075d42e4506199ba272ba979a951db2d5bc8708756de1990f7ceb5e2d8b6752b`
 <img src="images/verifierEtherscan.png" width="50%">
 

@@ -121,15 +121,15 @@ describe("ERC721Mintable", async()=>{
         let tokenIDs = [11, 22];
 
         it('should return correct name', async () =>{ 
-            expect(await ercMintable.getName()).to.eq(tokenName)
+            expect(await ercMintable.name()).to.eq(tokenName)
         });
 
         it('should return correct symbol', async () =>{ 
-            expect(await ercMintable.getSymbol()).to.eq(tokenSymbol)
+            expect(await ercMintable.symbol()).to.eq(tokenSymbol)
         });
 
         it('should return the correct uri', async()=>{
-            expect(await ercMintable.getBaseTokenURI()).to.eq(uri)
+            expect(await ercMintable.baseTokenURI()).to.eq(uri)
         });
 
         it('should return total supply', async () =>{ 

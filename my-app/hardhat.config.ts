@@ -19,6 +19,7 @@ const config: HardhatUserConfig = {
       url: `${process.env.INFURA_KEY}`,
       accounts: [`${process.env.PRIVATE_KEY}`],
       chainId: 4,
+      gas: 10000000,
     },
   },
 

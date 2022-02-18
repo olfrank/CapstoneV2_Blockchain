@@ -422,26 +422,26 @@ contract ERC721Metadata is ERC721Enumerable, usingProvable {
      */
 
 
-    constructor (string memory name, string memory symbol, string memory baseTokenURI) {
-        _name = name;
-        _symbol = symbol;
-        _baseTokenURI = baseTokenURI;
+    constructor (string memory tokenName, string memory tokenSymbol, string memory givenBaseTokenURI) {
+        _name = tokenName;
+        _symbol = tokenSymbol;
+        _baseTokenURI = givenBaseTokenURI;
 
         _registerInterface(_INTERFACE_ID_ERC721_METADATA);
     }
 
 
-    function getName() external view returns(string memory){
+    function name() external view returns(string memory){
         return _name;
     }
 
 
-    function getSymbol() external view returns(string memory){
+    function symbol() external view returns(string memory){
         return _symbol;
     }
 
 
-    function getBaseTokenURI() external view returns(string memory){
+    function baseTokenURI() external view returns(string memory){
         return _baseTokenURI;
     }
 

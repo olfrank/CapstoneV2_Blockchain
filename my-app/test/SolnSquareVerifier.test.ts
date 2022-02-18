@@ -2,7 +2,7 @@ import { ethers } from "hardhat";
 import { expect } from "chai";
 import { Contract, BigNumber } from "ethers";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import verifierProof from '../zokrates/code/square/proof.json';
+import verifierProof from '../zokrates/code/square/first/proof.json';
 
 describe("SolnSquareVerifier", async()=>{
     

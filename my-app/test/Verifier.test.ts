@@ -1,8 +1,8 @@
 import { ethers } from "hardhat";
 import { expect } from "chai";
-import { Contract, ContractTransaction, BigNumber } from "ethers";
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import verifierProof from '../zokrates/code/square/proof.json';
+import { Contract } from "ethers";
+// import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
+import verifierProof from '../zokrates/code/square/first/proof.json';
 
 describe("Verifier", async()=>{
     let verifier: Contract;
