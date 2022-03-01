@@ -1,36 +1,63 @@
-import logo from './logo.svg';
+
 import './App.css';
+
+import { 
+  ExplainSection, 
+  ExplainContainer, 
+  IntroSection, 
+  IntroContainer, 
+  ExplainHeader, 
+  IntroHeader, 
+  ExplainP, 
+  IntroP, 
+  HeroSection,
+  HeroTitle,
+ } from './AppElements.js';
+
+
+
 
 function App() {
   return (
     <>
-      <div class = "heroSection ">
-          <div id= "expandable" class = "animate__animated animate__fadeInLeft">
+      <HeroSection>
+          <HeroTitle class = "animate__animated animate__fadeInLeft">
               zk properties.
-          </div>
-      </div>
+          </HeroTitle>
+          
+      </HeroSection>
 
-      <div class = "introSection">
-
-          <div class = "introContainer">
-              {/* <img src="./client/images/buildingsStreet.jpeg" alt=""> */}
-              <h2><u>about.</u> </h2>
-
-              <p>zk properties is a decentralised property listing application backed by the ethereum blockchain. we tokenise property listing, making the purchasing of an asset fast, secure, and with fewer hidden costs.</p>    
+      <IntroSection>
+          <IntroContainer>
+              <IntroHeader>
+                about.
+              </IntroHeader>
+              <IntroP>
+                zk properties is a decentralised property listing application backed by 
+                the ethereum blockchain. We tokenise property listing, making the 
+                purchasing of an asset fast, secure, and with fewer hidden costs.
+              </IntroP>    
               {/* <p>through the use zkSNARKS we are able to securely prove ownership of a property without the need for a third party intermediary. Making the process less expensive for you.</p> */}
-          </div>
+          </IntroContainer>
+      </IntroSection>
 
-      </div>
 
-      <div class = "explainSection">
-          <div class = "explainContainer">
-              <h2><u>how it works. </u> </h2>
+      <ExplainSection>
+          <ExplainContainer>
+              <ExplainHeader>
+                how it works.
+              </ExplainHeader>
+              <ExplainP>
+                our available listings are on opensea, an open source NFT marketplace. 
+                through the use zkSNARKS we are able securely prove the ownership of a 
+                property without the need for a third party intermediary. Making the 
+                process cheaper.
+              </ExplainP>
+          </ExplainContainer>
+      </ExplainSection>
 
-              <p>our available listing are on opensea, an open source NFT marketplace. 
-                  through the use zkSNARKS we are able securely prove the ownership of a property without the need for a third party intermediary. Making the process cheaper.</p>
-          </div>
 
-      </div>
+
     </>
   );
 }
