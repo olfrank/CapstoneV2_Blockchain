@@ -1,7 +1,8 @@
-
+import React, {useState} from 'react';
 import './App.css';
 
 import { 
+  Body,
   ExplainSection, 
   ExplainContainer, 
   IntroSection, 
@@ -12,20 +13,56 @@ import {
   IntroP, 
   HeroSection,
   HeroTitle,
+  MintSection,
+  MintContainer,
+  Connect,
+  ConnectButton
  } from './AppElements.js';
 
 
 
 
 function App() {
+  const [errMessage, setErrMessage] = useState(null);
+  const [defaultAccount, setDefaultAccount] = useState(null);
+  const [connectButtonText, setConnectButtonText] = useState("Connect");
+
+
+  const [provider, setProvider] = useState(null);
+  const [signer, setSigner] = useState(null);
+  const [contract, setContract] = useState(null);
+
+  const connectWalletHandler = () =>{
+    if(window.ethereum){
+       window.ethereum.request({method: 'eth_requestAccounts'})
+       .then(res =>{
+          accountChangedHandler(res[0]);
+          
+       })
+    }else{
+      setErrMessage("NEED TO INSTAll METAMASK")
+    }
+  }
+
+  const accountChangedHandler = (newAccount) =>{
+    setDefaultAccount(newAccount);
+    setConnectButtonText(newAccount);
+  }
+
   return (
-    <>
+    <Body>
+      <Connect>
+        <ConnectButton onClick={connectWalletHandler}>{connectButtonText}</ConnectButton>
+        {errMessage}
+      </Connect>
+
       <HeroSection>
           <HeroTitle class = "animate__animated animate__fadeInLeft">
               zk properties.
           </HeroTitle>
-          
       </HeroSection>
+
+      
 
       <IntroSection>
           <IntroContainer>
@@ -48,17 +85,23 @@ function App() {
                 how it works.
               </ExplainHeader>
               <ExplainP>
-                our available listings are on opensea, an open source NFT marketplace. 
-                through the use zkSNARKS we are able securely prove the ownership of a 
+                Our available listings are on opensea, an open source NFT marketplace. 
+                Through the use zkSNARKS we are able securely prove the ownership of a 
                 property without the need for a third party intermediary. Making the 
                 process cheaper.
               </ExplainP>
           </ExplainContainer>
       </ExplainSection>
 
+      <MintSection>
+        <MintContainer>
+
+        </MintContainer>
+      </MintSection>
 
 
-    </>
+
+    </Body>
   );
 }
 

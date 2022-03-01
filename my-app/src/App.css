@@ -1,11 +1,4 @@
-.App {
-  /* text-align: center; */
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  font-family: Eu Alonira;
-  background-color: #9cbdd2;
-}
+
 
 @font-face {
   font-family: 'Eu Alonira';
@@ -19,6 +12,7 @@
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+  /* background-color: #d6b38a; */
 }
 
 
