@@ -49,8 +49,9 @@ function App() {
   const [tokenOwner, setTokenOwner] = useState();
 
   const [tokenBal, setTokenBal] = useState();
-  const [ownedTokens, setOwnedTokens] = useState([])
-
+  const [ownedTokens, setOwnedTokens] = useState([]);
+  const [tokenitem, setTokenItem] = useState();
+ 
   const connectWalletHandler = () =>{
     if(window.ethereum){
        window.ethereum.request({method: 'eth_requestAccounts'})
@@ -90,8 +91,13 @@ function App() {
     setTokenBalance(balance);
 
     var ownedTokens = await contract._tokensOfOwner(tokenOwner);
-
+    setOwnedTokens(ownedTokens);
   }
+
+  async function getTokenInfo(){
+    
+  }
+
 
 
 
@@ -161,13 +167,16 @@ function App() {
 
           <DropMenuTokens>
             <label>Owned Tokens</label>
-            <select id = "owned-tokens" class = "token-input"  ></select>
-
+            <select id = "owned-tokens" class = "token-input" onChange={e =>setTokenItem(e.target.value)} >
+              {ownedTokens.map(item =>{
+                return(<option value={item}>{item}</option>)
+              })}
+            </select>
           </DropMenuTokens>
 
           <InputContainer>
             <label>Token ID</label>
-            <input  type="text" class = "token-input" id="tokenId" disabled="true"/>
+            <input  type="text" class = "token-input" id="tokenId" value={tokenitem} disabled="true"/>
           </InputContainer>
           <InputContainer>
             <label>Token URI</label>

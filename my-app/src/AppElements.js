@@ -78,7 +78,7 @@ export const IntroContainer = styled.div`
 
     &:hover{
         transform: translate(10px, 10px);
-        box-shadow: -10px -10px 0 #313c2e;
+        box-shadow: -10px -10px 0 #5c5149;
     }
 `;
 
@@ -128,7 +128,7 @@ export const ExplainContainer = styled.div`
 
     &:hover{
         transform: translate(-10px, 10px);
-        box-shadow: 10px -10px 0 #000;
+        box-shadow: 10px -10px 0 #585543;
     }
 `
 
@@ -221,7 +221,7 @@ export const MintContainer = styled.div`
 
     &:hover{
         transform: translate(-10px, 10px);
-        box-shadow: 10px -10px 0 #000;
+        box-shadow: 10px -10px 0 #50372f;
     }
 `
 export const MintHeader = styled.h1`
