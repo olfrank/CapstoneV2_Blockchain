@@ -12,8 +12,17 @@
   font-weight: normal;
   font-style: normal;
   font-display: swap;
-  /* background-color: #d6b38a; */
+  background-color: #d69c8a;
 }
 
+label{
+  margin: 5%;
+  /* margin-right: 5%; */
+}
+
+input{
+  font-family: Eu Alonira;
+  margin-right: 5%;
+}
 
 

@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState } from 'react';
+import SolnSquare_abi from './abis/SolnSquareVerifier.json'
+import { ethers } from 'ethers';
 import './App.css';
 
 import { 
@@ -15,14 +17,22 @@ import {
   HeroTitle,
   MintSection,
   MintContainer,
+  MintHeader,
   Connect,
-  ConnectButton
+  ConnectButton,
+  TokenContainer,
+  TokenSection,
+  TokenHeader, 
+  InputContainer
  } from './AppElements.js';
 
 
 
 
 function App() {
+
+  const contractAddress = "0x6cffb27E4da96624146EC10f565EB547C87150d4";
+
   const [errMessage, setErrMessage] = useState(null);
   const [defaultAccount, setDefaultAccount] = useState(null);
   const [connectButtonText, setConnectButtonText] = useState("Connect");
@@ -47,6 +57,18 @@ function App() {
   const accountChangedHandler = (newAccount) =>{
     setDefaultAccount(newAccount);
     setConnectButtonText(newAccount);
+    updateEthers();
+  }
+
+  const updateEthers = ()=>{
+    let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
+    setProvider(tempProvider);
+
+    let tempSigner = tempProvider.getSigner();
+    setSigner(tempSigner);
+
+    let tempContract = new ethers.Contract(contractAddress, SolnSquare_abi, tempSigner);
+    setContract(tempContract);
   }
 
   return (
@@ -58,7 +80,7 @@ function App() {
 
       <HeroSection>
           <HeroTitle class = "animate__animated animate__fadeInLeft">
-              zk properties.
+              zkProperties.
           </HeroTitle>
       </HeroSection>
 
@@ -82,19 +104,54 @@ function App() {
       <ExplainSection>
           <ExplainContainer>
               <ExplainHeader>
-                how it works.
+                howItWorks.
               </ExplainHeader>
               <ExplainP>
                 Our available listings are on opensea, an open source NFT marketplace. 
-                Through the use zkSNARKS we are able securely prove the ownership of a 
+                Through the use zkSNARKS we are able securely prove the ownership of your 
                 property without the need for a third party intermediary. Making the 
-                process cheaper.
+                process cheaper, and quite frankly easier.
               </ExplainP>
           </ExplainContainer>
       </ExplainSection>
 
+      <TokenSection>
+        <TokenContainer>
+          <TokenHeader>tokenInformation.</TokenHeader>
+          <InputContainer>
+            <label>Contract Owner</label>
+            <input type="text" id="contractOwner" value="" disabled="true"></input>
+            <button class = "btn btn-contract-owner">Get Contract Owner</button>
+          </InputContainer>
+
+          <InputContainer>
+            <label>Token Owner</label>
+            <input type="text" id="tokenOwner"></input>
+            <button class = "btn btn-contract-owner">Get Token Information</button>
+          </InputContainer>
+
+          <InputContainer>
+            <label>Token ID</label>
+            <input type="text" id="tokenId" value="" disabled="true"></input>
+          </InputContainer>
+          <InputContainer>
+            <label>Token URI</label>
+            <input type="text" id="tokenURI" value="" disabled="true"></input>
+          </InputContainer>
+
+          <InputContainer>
+          <label>Token Balance</label>
+          <input type="text" id="tokenId" value="" disabled="true"></input>
+          </InputContainer>
+
+          
+          
+        </TokenContainer>
+      </TokenSection>
+
       <MintSection>
         <MintContainer>
+          <MintHeader>mintNFT</MintHeader>
 
         </MintContainer>
       </MintSection>
