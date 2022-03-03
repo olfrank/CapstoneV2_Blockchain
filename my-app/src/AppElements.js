@@ -174,13 +174,20 @@ export const TokenContainer = styled.div`
 `;
 
 export const TokenHeader = styled.h1`
-
+    text-decoration: underline;
 `
 
 export const InputContainer = styled.div`
     margin: 2%;
     font-family: Eu Alonira;
 `;
+
+export const DropMenuTokens = styled.div`
+    margin: 2%;
+    font-family: Eu Alonira;
+`;
+
+
 
 
 
@@ -218,8 +225,12 @@ export const MintContainer = styled.div`
     }
 `
 export const MintHeader = styled.h1`
-
+    text-decoration: underline;
 `;
+
+
+
+
 
 export const Connect = styled.div`
     display: flex;

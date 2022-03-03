@@ -1,5 +1,5 @@
 import React, {useState } from 'react';
-import SolnSquare_abi from './abis/SolnSquareVerifier.json'
+import SolnSquare from './abis/SolnSquareVerifier.json'
 import { ethers } from 'ethers';
 import './App.css';
 
@@ -23,7 +23,8 @@ import {
   TokenContainer,
   TokenSection,
   TokenHeader, 
-  InputContainer
+  InputContainer,
+  DropMenuTokens
  } from './AppElements.js';
 
 
@@ -41,6 +42,14 @@ function App() {
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
   const [contract, setContract] = useState(null);
+  const [contractOwner, setContractOwner] = useState();
+
+
+  const [tokenBalance, setTokenBalance] = useState(0);
+  const [tokenOwner, setTokenOwner] = useState();
+
+  const [tokenBal, setTokenBal] = useState();
+  const [ownedTokens, setOwnedTokens] = useState([])
 
   const connectWalletHandler = () =>{
     if(window.ethereum){
@@ -67,9 +76,24 @@ function App() {
     let tempSigner = tempProvider.getSigner();
     setSigner(tempSigner);
 
-    let tempContract = new ethers.Contract(contractAddress, SolnSquare_abi, tempSigner);
+    let tempContract = new ethers.Contract(contractAddress, SolnSquare.abi, tempSigner);
     setContract(tempContract);
   }
+
+  async function getOwner(){
+    var owner = await contract.getOwner();
+    setContractOwner(owner);
+  }
+
+  async function getTokenOwnerInfo(){
+    var balance = await contract.balanceOf(tokenOwner);
+    setTokenBalance(balance);
+
+    var ownedTokens = await contract._tokensOfOwner(tokenOwner);
+
+  }
+
+
 
   return (
     <Body>
@@ -120,29 +144,37 @@ function App() {
           <TokenHeader>tokenInformation.</TokenHeader>
           <InputContainer>
             <label>Contract Owner</label>
-            <input type="text" id="contractOwner" value="" disabled="true"></input>
-            <button class = "btn btn-contract-owner">Get Contract Owner</button>
+            <input type="text" class = "token-input" id="contractOwner" value={contractOwner} disabled="true"/>
+            <button onClick={getOwner} class = "btn btn-contract-owner" >Get Contract Owner</button>
           </InputContainer>
 
           <InputContainer>
             <label>Token Owner</label>
-            <input type="text" id="tokenOwner"></input>
-            <button class = "btn btn-contract-owner">Get Token Information</button>
-          </InputContainer>
-
-          <InputContainer>
-            <label>Token ID</label>
-            <input type="text" id="tokenId" value="" disabled="true"></input>
-          </InputContainer>
-          <InputContainer>
-            <label>Token URI</label>
-            <input type="text" id="tokenURI" value="" disabled="true"></input>
+            <input class = "token-input" type="text"  onChange={e => setTokenOwner(e.target.value)}/>
+            <button onClick={getTokenOwnerInfo} class = "btn btn-contract-owner">Get Token Information</button>
           </InputContainer>
 
           <InputContainer>
           <label>Token Balance</label>
-          <input type="text" id="tokenId" value="" disabled="true"></input>
+          <input type="text" class = "token-input" value={tokenBalance} disabled="true"/>
           </InputContainer>
+
+          <DropMenuTokens>
+            <label>Owned Tokens</label>
+            <select id = "owned-tokens" class = "token-input"  ></select>
+
+          </DropMenuTokens>
+
+          <InputContainer>
+            <label>Token ID</label>
+            <input  type="text" class = "token-input" id="tokenId" disabled="true"/>
+          </InputContainer>
+          <InputContainer>
+            <label>Token URI</label>
+            <input type="text" class = "token-input" id="tokenURI" disabled="true"/>
+          </InputContainer>
+
+          
 
           
           

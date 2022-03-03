@@ -24,5 +24,13 @@ input{
   font-family: Eu Alonira;
   margin-right: 5%;
 }
+select{
+  width: 30%;
+  height: 44px;
+}
+.token-input{
+  background-color: #cce5bc;
+  border: none;
+}
 
 
