@@ -1,17 +1,17 @@
 import React from 'react';
 
-import {MintContainer, MintHeader, MintSection} from './mintSectionElements'
+import {MintContainer, MintHeader, MintNFTSection} from './mintSectionElements'
 
 
 const MintSection = () =>{
 
     return(
-        <MintSection>
+        <MintNFTSection>
         <MintContainer>
           <MintHeader>mintNFT</MintHeader>
 
         </MintContainer>
-      </MintSection>
+      </MintNFTSection>
     )
 }
 

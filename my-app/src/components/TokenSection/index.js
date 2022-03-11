@@ -1,12 +1,34 @@
-import React from 'react';
+import React, {useState } from 'react';
 
-import {MintContainer, MintHeader, MintSection} from './mintSectionElements'
+import {TokenContainer, TokenInfoSection, TokenHeader, InputContainer, DropMenuTokens} from './tokenSectionElements'
 
 
 const TokenSection = () =>{
+  const [tokenBalance, setTokenBalance] = useState(0);
+  const [tokenOwner, setTokenOwner] = useState();
+
+  const [ownedTokens, setOwnedTokens] = useState([]);
+  const [tokenitem, setTokenItem] = useState();
+
+  async function getOwner(){
+    var owner = await contract.getOwner();
+    setContractOwner(owner);
+  }
+
+  async function getTokenOwnerInfo(){
+    var balance = await contract.balanceOf(tokenOwner);
+    setTokenBalance(balance);
+
+    var ownedTokens = await contract._tokensOfOwner(tokenOwner);
+    setOwnedTokens(ownedTokens);
+  }
+
+  async function getTokenInfo(){
+    
+  }
 
     return(
-      <TokenSection>
+      <TokenInfoSection>
         <TokenContainer>
           <TokenHeader>tokenInformation.</TokenHeader>
           <InputContainer>
@@ -44,7 +66,7 @@ const TokenSection = () =>{
             <input type="text" class = "token-input" id="tokenURI" disabled="true"/>
           </InputContainer>
         </TokenContainer>
-      </TokenSection>
+      </TokenInfoSection>
     )
 }
 

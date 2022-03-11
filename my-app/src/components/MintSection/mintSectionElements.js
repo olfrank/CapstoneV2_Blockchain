@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 
-export const MintSection = styled.div`
+export const MintNFTSection = styled.div`
     height: 100vh;
     width: 100%;
     margin-top: 10%;

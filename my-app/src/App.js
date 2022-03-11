@@ -16,16 +16,8 @@ import {
   IntroP, 
   HeroSection,
   HeroTitle,
-  MintSection,
-  MintContainer,
-  MintHeader,
   Connect,
   ConnectButton,
-  TokenContainer,
-  TokenSection,
-  TokenHeader, 
-  InputContainer,
-  DropMenuTokens
  } from './AppElements.js';
 
 
