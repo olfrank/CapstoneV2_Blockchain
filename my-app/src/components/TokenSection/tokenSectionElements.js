@@ -29,7 +29,7 @@ export const TokenContainer = styled.div`
 
     &:hover{
         transform: translate(10px, 10px);
-        box-shadow: -10px -10px 0 #313c2e;
+        box-shadow: -20px -20px 0 #313c2e;
     }
 `;
 
