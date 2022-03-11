@@ -44,7 +44,7 @@ export const Connect = styled.div`
     float: right;
     z-index: 3;
     margin-top: 13%;
-    margin-left: 10%;
+    margin-left: 2%;
 
 `;
 
@@ -52,7 +52,8 @@ export const ConnectButton = styled.button`
     border: none;
     background-color: #8ad1d6;
     color: rgb(39, 39, 39);
-    padding: 20px;
+    padding: 8px;
+    width: 11em;
 `;
 
 

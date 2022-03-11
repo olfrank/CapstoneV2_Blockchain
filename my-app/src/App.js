@@ -25,7 +25,7 @@ import {
 
 function App() {
 
-  const contractAddress = "0x6cffb27E4da96624146EC10f565EB547C87150d4";
+  const contractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
 
   const [errMessage, setErrMessage] = useState(null);
   const [defaultAccount, setDefaultAccount] = useState(null);
@@ -59,14 +59,14 @@ function App() {
   }
 
   const updateEthers = ()=>{
-    let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
-    setProvider(tempProvider);
+    let Provider = new ethers.providers.Web3Provider(window.ethereum);
+    setProvider(Provider);
 
-    let tempSigner = tempProvider.getSigner();
-    setSigner(tempSigner);
+    let Signer = Provider.getSigner();
+    setSigner(Signer);
 
-    let tempContract = new ethers.Contract(contractAddress, SolnSquare.abi, tempSigner);
-    setContract(tempContract);
+    let deployedContract = new ethers.Contract(contractAddress, SolnSquare.abi, Provider);
+    setContract(deployedContract);
   }
 
 
@@ -74,12 +74,12 @@ function App() {
   return (
     <Body>
       <Connect>
-        <ConnectButton onClick={connectWalletHandler}>{connectButtonText}</ConnectButton>
+        <ConnectButton onClick={connectWalletHandler}>{connectButtonText.slice(0, 10)+'...'}</ConnectButton>
         {errMessage}
       </Connect>
 
       <HeroSection>
-          <HeroTitle class = "animate__animated animate__fadeInLeft">
+          <HeroTitle className = "animate__animated animate__fadeInLeft">
               zkProperties.
           </HeroTitle>
       </HeroSection>
