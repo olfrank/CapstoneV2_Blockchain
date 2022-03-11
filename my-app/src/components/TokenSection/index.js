@@ -3,14 +3,16 @@ import React, {useState } from 'react';
 import {TokenContainer, TokenInfoSection, TokenHeader, InputContainer, DropMenuTokens} from './tokenSectionElements'
 
 
-const TokenSection = () =>{
+const TokenSection = (contract) =>{
+  const [contractOwner, setContractOwner] = useState();
   const [tokenBalance, setTokenBalance] = useState(0);
   const [tokenOwner, setTokenOwner] = useState();
 
   const [ownedTokens, setOwnedTokens] = useState([]);
-  const [tokenitem, setTokenItem] = useState();
+  const [tokenItem, setTokenItem] = useState();
+  const [tokenURI, setTokenURI] = useState("");
 
-  async function getOwner(){
+  async function getContractOwner(){
     var owner = await contract.getOwner();
     setContractOwner(owner);
   }
@@ -23,8 +25,8 @@ const TokenSection = () =>{
     setOwnedTokens(ownedTokens);
   }
 
-  async function getTokenInfo(){
-    
+  async function getTokenURI(){
+    setTokenURI(await contract.tokenURI(tokenItem))
   }
 
     return(
@@ -34,7 +36,7 @@ const TokenSection = () =>{
           <InputContainer>
             <label>Contract Owner</label>
             <input type="text" class = "token-input" id="contractOwner" value={contractOwner} disabled="true"/>
-            <button onClick={getOwner} class = "btn btn-contract-owner" >Get Contract Owner</button>
+            <button onClick={getContractOwner} class = "btn btn-contract-owner" >Get Contract Owner</button>
           </InputContainer>
 
           <InputContainer>
@@ -52,18 +54,18 @@ const TokenSection = () =>{
             <label>Owned Tokens</label>
             <select id = "owned-tokens" class = "token-input" onChange={e =>setTokenItem(e.target.value)} >
               {ownedTokens.map(item =>{
-                return(<option value={item}>{item}</option>)
+                return(<option onClick={getTokenURI} value={item}>{item}</option>)
               })}
             </select>
           </DropMenuTokens>
 
           <InputContainer>
             <label>Token ID</label>
-            <input  type="text" class = "token-input" id="tokenId" value={tokenitem} disabled="true"/>
+            <input  type="text" class = "token-input" id="tokenId" value={tokenItem} disabled="true"/>
           </InputContainer>
           <InputContainer>
             <label>Token URI</label>
-            <input type="text" class = "token-input" id="tokenURI" disabled="true"/>
+            <input type="text" class = "token-input" id="tokenURI" value={tokenURI} disabled="true"/>
           </InputContainer>
         </TokenContainer>
       </TokenInfoSection>

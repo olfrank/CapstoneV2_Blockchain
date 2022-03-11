@@ -35,15 +35,10 @@ function App() {
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
   const [contract, setContract] = useState(null);
-  const [contractOwner, setContractOwner] = useState();
+  
 
 
-  const [tokenBalance, setTokenBalance] = useState(0);
-  const [tokenOwner, setTokenOwner] = useState();
-
-  const [tokenBal, setTokenBal] = useState();
-  const [ownedTokens, setOwnedTokens] = useState([]);
-  const [tokenitem, setTokenItem] = useState();
+  
  
   const connectWalletHandler = () =>{
     if(window.ethereum){
@@ -73,24 +68,6 @@ function App() {
     let tempContract = new ethers.Contract(contractAddress, SolnSquare.abi, tempSigner);
     setContract(tempContract);
   }
-
-  async function getOwner(){
-    var owner = await contract.getOwner();
-    setContractOwner(owner);
-  }
-
-  async function getTokenOwnerInfo(){
-    var balance = await contract.balanceOf(tokenOwner);
-    setTokenBalance(balance);
-
-    var ownedTokens = await contract._tokensOfOwner(tokenOwner);
-    setOwnedTokens(ownedTokens);
-  }
-
-  async function getTokenInfo(){
-    
-  }
-
 
 
 
@@ -134,7 +111,7 @@ function App() {
               </ExplainP>
           </ExplainContainer>
       </ExplainSection>
-      <TokenSection />
+      <TokenSection contract={contract}/>
       <MintSection />
     </Body>
   );
