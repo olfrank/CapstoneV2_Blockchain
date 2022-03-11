@@ -21,25 +21,15 @@ import {
  } from './AppElements.js';
 
 
-
+const contractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const contract = new ethers.Contract(contractAddress, SolnSquare.abi, provider);
 
 function App() {
 
-  const contractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
-
   const [errMessage, setErrMessage] = useState(null);
-  const [defaultAccount, setDefaultAccount] = useState(null);
   const [connectButtonText, setConnectButtonText] = useState("Connect");
-
-
-  const [provider, setProvider] = useState(null);
-  const [signer, setSigner] = useState(null);
-  const [contract, setContract] = useState(null);
   
-
-
-  
- 
   const connectWalletHandler = () =>{
     if(window.ethereum){
        window.ethereum.request({method: 'eth_requestAccounts'})
@@ -53,20 +43,7 @@ function App() {
   }
 
   const accountChangedHandler = (newAccount) =>{
-    setDefaultAccount(newAccount);
     setConnectButtonText(newAccount);
-    updateEthers();
-  }
-
-  const updateEthers = ()=>{
-    let Provider = new ethers.providers.Web3Provider(window.ethereum);
-    setProvider(Provider);
-
-    let Signer = Provider.getSigner();
-    setSigner(Signer);
-
-    let deployedContract = new ethers.Contract(contractAddress, SolnSquare.abi, Provider);
-    setContract(deployedContract);
   }
 
 
@@ -111,8 +88,8 @@ function App() {
               </ExplainP>
           </ExplainContainer>
       </ExplainSection>
-      <TokenSection contract={contract}/>
-      <MintSection />
+      <TokenSection contract = {contract}/>
+      <MintSection contract = {contract}/>
     </Body>
   );
 }

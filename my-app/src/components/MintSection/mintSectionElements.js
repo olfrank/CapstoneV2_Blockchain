@@ -36,3 +36,12 @@ export const MintHeader = styled.h1`
     text-decoration: underline;
 `;
 
+export const SubHeading = styled.h2`
+    
+`;
+
+export const InputContainer = styled.div`
+
+`;
+
+
