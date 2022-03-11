@@ -1,11 +1,14 @@
-import React, {useState } from 'react';
+import React, {useState, useEffect } from 'react';
 import SolnSquare from './abis/SolnSquareVerifier.json'
 import { ethers } from 'ethers';
 import './App.css';
 import MintSection from './components/MintSection';
 import TokenSection from './components/TokenSection';
+import 'animate.css';
+
 import { 
   Body,
+  HeroBg,
   ExplainSection, 
   ExplainContainer, 
   IntroSection, 
@@ -18,6 +21,7 @@ import {
   HeroTitle,
   Connect,
   ConnectButton,
+  HeroSubheading,
  } from './AppElements.js';
 
 
@@ -27,8 +31,20 @@ const contract = new ethers.Contract(contractAddress, SolnSquare.abi, provider);
 
 function App() {
 
+  const [offsetY, setOffsetY] = useState(0);
+  const handleScroll = () => setOffsetY(window.pageYOffset);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const [errMessage, setErrMessage] = useState(null);
   const [connectButtonText, setConnectButtonText] = useState("Connect");
+
+  
+
   
   const connectWalletHandler = () =>{
     if(window.ethereum){
@@ -42,6 +58,7 @@ function App() {
     }
   }
 
+
   const accountChangedHandler = (newAccount) =>{
     setConnectButtonText(newAccount);
   }
@@ -50,19 +67,35 @@ function App() {
 
   return (
     <Body>
-      <Connect>
+      <Connect style={{ transform: `translateY(${offsetY * 0.03}px)` }}>
         <ConnectButton onClick={connectWalletHandler}>{connectButtonText.slice(0, 10)+'...'}</ConnectButton>
         {errMessage}
       </Connect>
+      <HeroBg style={{ transform: `translateY(-${offsetY * 0.1}px)` }}>
+      <HeroSection >
+          <HeroTitle 
+          style={{ transform: `translateY(-${offsetY * 0.09}px)` }}
+          // className = "animate__animated animate__fadeInLeft" 
+          >
 
-      <HeroSection>
-          <HeroTitle className = "animate__animated animate__fadeInLeft">
               zkProperties.
+
+              <HeroSubheading 
+              style={{ transform: `translateY(-${offsetY * 0.03}px)` }}
+              
+              >
+
+              prove whats yours.
+
+              </HeroSubheading>
           </HeroTitle>
+          
       </HeroSection>
+      </HeroBg>
+      
 
       <IntroSection>
-          <IntroContainer>
+          <IntroContainer >
               <IntroHeader>
                 about.
               </IntroHeader>
@@ -75,8 +108,8 @@ function App() {
           </IntroContainer>
       </IntroSection>
 
-      <ExplainSection>
-          <ExplainContainer>
+      <ExplainSection >
+          <ExplainContainer >
               <ExplainHeader>
                 howItWorks.
               </ExplainHeader>

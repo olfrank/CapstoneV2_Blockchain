@@ -3,11 +3,24 @@ import whiteHouse from './images/houseWhite.jpeg';
 
 
 export const Body = styled.div`
-    height: 100%;
+    height: 120%;
     width: 100%;
     margin: 0;
     font-family: Eu Alonira;
     background-color: #9cbdd2;
+`;
+
+export const HeroBg = styled.div`
+        
+    height: 160vh;
+    background-image: url(${whiteHouse}); 
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: cover;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    
 `;
 
 
@@ -18,13 +31,7 @@ export const HeroSection = styled.div`
     align-items: center;
     font-family: Eu Alonira;
     height: 100vh;
-    background-image: url(${whiteHouse}); 
-    background-repeat: no-repeat;
-    background-position: top;
-    background-size: cover;
-    overflow: hidden;
     width: 100%;
-    font-size: 1.2em;
     background-attachment: fixed;
     z-index: 1;
 `;
@@ -32,10 +39,19 @@ export const HeroSection = styled.div`
 export const HeroTitle = styled.div`
     width: 100vw; 
     height: 100vh;
+    margin-top: 10%;
     text-align: center;
-    position: fixed;
-    font-size: 5vw;
+    font-size: 9vh;
     transform-origin: center top;
+    color: #3c313d;
+`;
+
+export const HeroSubheading = styled.div`
+    font-size: 2.9vh;
+    margin-top: -4%;
+    color: #3d3138;
+    
+
 `;
 
 export const Connect = styled.div`
@@ -133,7 +149,7 @@ export const ExplainSection = styled.div`
 
 export const ExplainContainer = styled.div`
     background-color: #c1ba95;
-    padding: 5%;
+    padding: 10%;
     width: 60%;
     height: 60%;
     margin: auto;
@@ -146,7 +162,7 @@ export const ExplainContainer = styled.div`
 
     &:hover{
         transform: translate(-10px, 10px);
-        box-shadow: 30px -35px 0 #585543;
+        box-shadow: 30px -30px 0 #585543;
     }
 `
 
