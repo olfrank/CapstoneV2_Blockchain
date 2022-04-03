@@ -11,7 +11,17 @@
 <br>
 
 ### The Project
-- This project is a proof of property ownership layer which tokenises a users title to a property. Before a user mints a token, they must verify the ownership of a property. In order to do this, zk-SNARKS has been implemented to create a verification system. This system proves that the user has their title to the property without revealing specific/sensitive information about the property. 
+- This project is a decentralised property listing application on Ethereum. It solves the problem of using paper-based property titles which has created the opportunity for errors and fraud. 
+
+- Any identified defects in titles makes it illegal to transfer a property title to a buyer. Resultantly, owners often incur high legal fees to ensure authenticity and accuracy of their property titles.
+
+- The solution is to leverage blockchain to build an immutable digital record of land titles for greater transparency which will help to reduce the risk of title fraud and the need for additional insurance. 
+
+- This projects uses zkSNARKs (Zero Succinct Non-Interactive Arguments of Knowledge) to verify a buyer’s title to a property without revealing sensitive information.  
+
+- Before a user mints a token, they must verify the ownership of a property. In order to do so, they must provide a solution to a problem that only the owner would know. The problem used in this application is a square root function. Only the owner knows the input and the answer so this should prove as a simple but effective method of verification. 
+
+- To make this application more applicable to a real world scenario, instead of a square root function, the owner could hash  valid documentation and compared its value to a corresponding hash value on record. This would provide a truth/false validation of ones ownership to a property title. 
 
 ### zkSNARKs
 - zkSNARKs (Zero Knowledge, Succinct, Non-Interactive Argument of Knowledge) allows you to verify, with cryptographic certainty, that someone else has computed a value and that they’ve done so by a process which you can verify all without having to witness the actual computation. Its a way to quickly prove something, without interacting with anyone else, in a way that is difficult to hack, can’t be replicated, and can be done without you needing to tell anyone what you’re trying to prove.  
