@@ -24,9 +24,9 @@
 - To make this application more applicable to a real world scenario, instead of a square root function, the owner could hash  valid documentation and compared its value to a corresponding hash value on record. This would provide a truth/false validation of ones ownership to a property title. 
 
 ### zkSNARKs
-- zkSNARKs (Zero Knowledge, Succinct, Non-Interactive Argument of Knowledge) allows you to verify, with cryptographic certainty, that someone else has computed a value and that they’ve done so by a process which you can verify all without having to witness the actual computation. Its a way to quickly prove something, without interacting with anyone else, in a way that is difficult to hack, can’t be replicated, and can be done without you needing to tell anyone what you’re trying to prove.  
+- zkSNARKs allows you to verify, with cryptographic certainty, that someone else has computed a value and that they’ve done so by a process which you can verify all without having to witness the actual computation. Its a way to quickly prove something, without interacting with anyone else, in a way that is difficult to hack, can’t be replicated, and can be done without you needing to tell anyone what you’re trying to prove.  
 
-- In this project, zkSNARKs has been implemented using ZoKrates, a toolbox for zkSNARKs on Ethereum. ZoKrates provides a higher level programming language which compiles down to the underlying constraint system and thus allows programmers to write snarks much closer to how they are used to programming. Docker has also been used to intialise and setup ZoKrates. 
+- In this project, zkSNARKs has been implemented using ZoKrates, a toolbox for zkSNARKs on Ethereum. ZoKrates provides a higher level programming language which compiles down to the underlying constraint system. Docker has also been used to intialise and setup ZoKrates. 
 
 ### OpenSea
 - Property tokens are listed on OpenSea, a decentralised marketplace used for selling digital assets on Ethereum. 
